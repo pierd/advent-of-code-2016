@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 aoc-helpers = { path = "../aoc-helpers" }
+md5 = "0.7.0"
+rayon = "1.5.3"
