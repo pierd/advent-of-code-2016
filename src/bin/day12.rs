@@ -1,7 +1,8 @@
 use std::str::FromStr;
 
 use aoc_helpers::{
-    anyhow, interpret,
+    anyhow,
+    interpret::{Execute, Jump},
     scaffold::{solve, Problem, VecFromLines},
 };
 
@@ -93,8 +94,8 @@ enum Instr {
     JumpNotZero { cond: Operand, offset: isize },
 }
 
-impl interpret::Instruction<State> for Instr {
-    fn execute(&self, state: State) -> (State, interpret::Jump) {
+impl Execute<State> for Instr {
+    fn execute(&self, state: State) -> (State, Jump) {
         match *self {
             Instr::Copy { from, to } => {
                 let val = state.eval(from);
@@ -107,7 +108,7 @@ impl interpret::Instruction<State> for Instr {
                 (
                     state,
                     if val != 0 {
-                        interpret::Jump::Relative(offset)
+                        Jump::Relative(offset)
                     } else {
                         Default::default()
                     },
@@ -148,20 +149,19 @@ impl Problem for Day12 {
     type Part2 = isize;
 
     fn solve_part1(input: &<Self::Input as aoc_helpers::scaffold::Parse>::Parsed) -> Self::Part1 {
-        interpret::execute_all_default(input).a
+        input.execute(Default::default()).0.a
     }
 
     fn solve_part2(input: &<Self::Input as aoc_helpers::scaffold::Parse>::Parsed) -> Self::Part2 {
-        interpret::execute_all(
-            State {
+        input
+            .execute(State {
                 a: 0,
                 b: 0,
                 c: 1,
                 d: 0,
-            },
-            input,
-        )
-        .a
+            })
+            .0
+            .a
     }
 }
 
