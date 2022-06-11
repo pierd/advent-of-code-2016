@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 # aoc-helpers = { path = "../aoc-helpers" }
-aoc-helpers = { git = "https://github.com/pierd/aoc-helpers", rev = "14fcb55" }
+aoc-helpers = { git = "https://github.com/pierd/aoc-helpers", rev = "a34f613" }
 lazy_static = "1.4.0"
 md5 = "0.7.0"
 rayon = "1.5.3"

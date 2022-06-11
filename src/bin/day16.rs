@@ -59,7 +59,7 @@ impl BitSeq {
                     std::cmp::Ordering::Greater => {
                         let relative_idx = len - 1 - (idx - len - 1);
                         !b.get(relative_idx)
-                    },
+                    }
                 }
             }
             BitSeq::Trimmed(b, l) => {
