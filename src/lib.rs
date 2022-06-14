@@ -4,7 +4,7 @@ use aoc_helpers::{
 };
 use rematch::rematch;
 
-#[derive(Copy, Clone, Debug, Default)]
+#[derive(Copy, Clone, Debug, Default, Hash, PartialEq, Eq)]
 pub struct State {
     pub a: isize,
     pub b: isize,
@@ -37,7 +37,7 @@ impl State {
         new
     }
 
-    fn eval(&self, oper: Operand) -> isize {
+    pub fn eval(&self, oper: Operand) -> isize {
         match oper {
             Operand::Literal(x) => x,
             Operand::Register(r) => self.get(r),
@@ -76,8 +76,12 @@ pub enum Instr {
     Incr(Register),
     #[rematch(r"dec (a|b|c|d)")]
     Decr(Register),
-    #[rematch(r"jnz (-?\d+|a|b|c|d) (-?\d+)")]
-    JumpNotZero { cond: Operand, offset: isize },
+    #[rematch(r"jnz (-?\d+|a|b|c|d) (-?\d+|a|b|c|d)")]
+    JumpNotZero { cond: Operand, offset: Operand },
+    #[rematch(r"tgl (-?\d+|a|b|c|d)")]
+    Toggle(Operand),
+    #[rematch(r"out (-?\d+|a|b|c|d)")]
+    Output(Operand),
 }
 
 impl Execute<State> for Instr {
@@ -91,6 +95,7 @@ impl Execute<State> for Instr {
             Instr::Decr(reg) => (state.new_with_change(reg, |x| x - 1), Default::default()),
             Instr::JumpNotZero { cond, offset } => {
                 let val = state.eval(cond);
+                let offset = state.eval(offset);
                 (
                     state,
                     if val != 0 {
@@ -99,6 +104,10 @@ impl Execute<State> for Instr {
                         Default::default()
                     },
                 )
+            }
+            Instr::Toggle(_) | Instr::Output(_) => {
+                // no-op for this trait
+                (state, Default::default())
             }
         }
     }
