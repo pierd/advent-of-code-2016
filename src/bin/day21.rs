@@ -94,26 +94,11 @@ impl Instruction {
                 assert!(x <= y);
                 password[x..=y].reverse();
             }
-            #[allow(clippy::needless_collect)]
             Instruction::Move(x, y) => {
-                let temp: Vec<char> = (0..password.len())
-                    .into_iter()
-                    .map(|idx| {
-                        if (idx < x && idx < y) || (x < idx && y < idx) {
-                            password[idx]
-                        } else if idx == y {
-                            password[x]
-                        } else if x <= idx && idx < y {
-                            password[idx + 1]
-                        } else if y < idx && idx <= x {
-                            password[idx - 1]
-                        } else {
-                            unreachable!()
-                        }
-                    })
-                    .collect();
-                for (p, t) in password.iter_mut().zip(temp.into_iter()) {
-                    *p = t;
+                if x < y {
+                    password[x..=y].rotate_left(1);
+                } else {
+                    password[y..=x].rotate_right(1);
                 }
             }
         }
