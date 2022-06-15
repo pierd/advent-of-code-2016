@@ -177,17 +177,3 @@ impl Problem for Day22 {
 fn main() {
     solve::<Day22>(include_str!("../../inputs/day22.txt"));
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use aoc_helpers::scaffold::{solve_part1, solve_part2};
-
-    const SAMPLE: &str = "";
-
-    #[test]
-    fn test_sample() {
-        assert_eq!(solve_part1::<Day22>(SAMPLE), Default::default());
-        assert_eq!(solve_part2::<Day22>(SAMPLE), Default::default());
-    }
-}
