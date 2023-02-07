@@ -20,7 +20,7 @@ fn toggle(instr: Instr) -> Instr {
             cond,
             offset: Operand::Register(x),
         } => Instr::Copy { from: cond, to: x },
-        _ => panic!("can't toggle: {:?}", instr),
+        _ => panic!("can't toggle: {instr:?}"),
     }
 }
 

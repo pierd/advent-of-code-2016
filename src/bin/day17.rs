@@ -46,7 +46,7 @@ impl StateTransitionsIterator {
                 .filter_map(|((nibble, direction), (dx, dy))| {
                     let new_x = state.x + dx;
                     let new_y = state.y + dy;
-                    if nibble >= 0x0b && new_x >= 0 && new_x < 4 && new_y >= 0 && new_y < 4 {
+                    if nibble >= 0x0b && (0..4).contains(&new_x) && (0..4).contains(&new_y) {
                         Some(((new_x, new_y), direction))
                     } else {
                         None

@@ -45,8 +45,8 @@ impl FromStr for Floor {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut result: Self = Default::default();
         for (idx, element) in ELEMENTS.into_iter().enumerate() {
-            result.generators[idx] = s.contains(&format!("a {} generator", element));
-            result.chips[idx] = s.contains(&format!("a {}-compatible microchip", element));
+            result.generators[idx] = s.contains(&format!("a {element} generator"));
+            result.chips[idx] = s.contains(&format!("a {element}-compatible microchip"));
         }
         Ok(result)
     }

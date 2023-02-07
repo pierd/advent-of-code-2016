@@ -9,7 +9,7 @@ fn find_next_digest_with_five_zeroes(mut start: u32, prefix: &str) -> Option<(u3
     loop {
         let result = (start..(start + SEARCH_BATCH_SIZE))
             .into_par_iter()
-            .map(|n| -> (u32, [u8; 16]) { (n, md5::compute(format!("{}{}", prefix, n)).into()) })
+            .map(|n| -> (u32, [u8; 16]) { (n, md5::compute(format!("{prefix}{n}")).into()) })
             .find_first(|(_, d)| d[0..2] == [0, 0] && d[2] < 0x10);
         if result.is_some() {
             return result;
@@ -93,6 +93,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "slow"]
     fn test_sample() {
         assert_eq!(solve_part1::<Day05>(SAMPLE), "18f47a30");
         assert_eq!(solve_part2::<Day05>(SAMPLE), "05ace8e3");

@@ -15,7 +15,7 @@ fn hash(rounds: usize, s: &str) -> String {
 fn produce_hashes(rounds: usize, prefix: String) -> impl Iterator<Item = (usize, String)> {
     (0..)
         .into_iter()
-        .map(move |n| (n, hash(rounds, &format!("{}{}", prefix, n))))
+        .map(move |n| (n, hash(rounds, &format!("{prefix}{n}"))))
 }
 
 fn find_3_and_5(s: &str) -> (Option<u8>, Option<u8>) {

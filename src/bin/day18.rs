@@ -80,7 +80,7 @@ mod tests {
     fn test_sample() {
         let row = ".^^.^.^^^^"
             .chars()
-            .map(|c| Tile::try_from(c))
+            .map(Tile::try_from)
             .collect::<Result<Vec<_>, _>>()
             .unwrap();
         assert_eq!(count_safe_tiles(row, 10), 38);

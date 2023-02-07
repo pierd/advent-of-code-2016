@@ -189,7 +189,7 @@ impl BotSystem {
                     }
                 }
             } else {
-                panic!("No rule for bot: {}", full_bot);
+                panic!("No rule for bot: {full_bot}");
             }
         }
         assert!(full_bots.is_empty());

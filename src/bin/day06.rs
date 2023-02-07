@@ -12,7 +12,7 @@ where
     for item in iter {
         *counts.entry(item).or_default() += 1;
     }
-    let max_count = counts.iter().map(|(_, count)| *count).max();
+    let max_count = counts.values().copied().max();
     max_count.and_then(|m| counts.into_iter().find(|(_, v)| *v == m).map(|(k, _)| k))
 }
 
@@ -24,7 +24,7 @@ where
     for item in iter {
         *counts.entry(item).or_default() += 1;
     }
-    let min_count = counts.iter().map(|(_, count)| *count).min();
+    let min_count = counts.values().copied().min();
     min_count.and_then(|m| counts.into_iter().find(|(_, v)| *v == m).map(|(k, _)| k))
 }
 
